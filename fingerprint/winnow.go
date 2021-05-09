@@ -17,7 +17,7 @@ func Winnow(g int, kgrams []uint32) (winnow [][]uint32) {
 	return winnow
 }
 
-func WinnowFingerprint(g int, kgrams []uint32) (finger Finger) {
+func WinnowFingerprint(g int, kgrams []uint32) (finger Fingerprint) {
 	values := Winnow(g, kgrams)
 
 	for _, value := range values {
@@ -27,18 +27,18 @@ func WinnowFingerprint(g int, kgrams []uint32) (finger Finger) {
 	return finger
 }
 
-type Window struct {
-	Min   uint32
-	Index int
+type Mark struct {
+	MinValue uint32
+	Index    int
 }
 
-type Finger []Window
+type Fingerprint []Mark
 
-func RightmostLowestValue(values []uint32) (w Window) {
-	w.Min = math.MaxUint32
+func RightmostLowestValue(values []uint32) (w Mark) {
+	w.MinValue = math.MaxUint32
 	for i, v := range values {
-		if v <= w.Min {
-			w.Min = v
+		if v <= w.MinValue {
+			w.MinValue = v
 			w.Index = i
 		}
 	}

@@ -3,18 +3,19 @@ package text
 import "testing"
 import "github.com/stretchr/testify/assert"
 
-func TestTextCleaning(t *testing.T) {
-	t.Run("should return an empty string for an empty string", func(t *testing.T) {
-		assert.Equal(t, "", Clean(``))
-	})
-
-	t.Run("should return an empty string for all punctuation strings", func(t *testing.T) {
-		assert.Equal(t, "", Clean(`,/[] `))
-	})
-
-	t.Run("should return significant characters from string", func(t *testing.T) {
-		assert.Equal(t, "adorunrunrunadorunrun", Clean(`A do run run run, a do run run`))
-
-	})
+func TestTestCleaning(t *testing.T) {
+	tests := []struct {
+		name    string
+		raw     string
+		cleaned string
+	}{
+		{name: "should return an empty string for an empty string", raw: "", cleaned: ""},
+		{name: "should return an empty string for all punctuation strings", raw: `,/[] `, cleaned: ""},
+		{name: "should return significant characters from string", cleaned: "adorunrunrunadorunrun", raw: `A do run run run, a do run run`},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			assert.Equal(t, test.cleaned, Clean(test.raw))
+		})
+	}
 }
-

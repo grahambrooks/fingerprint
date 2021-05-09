@@ -19,13 +19,13 @@ func TestFingerprinting(t *testing.T) {
 func TestFingerprintOptions(t *testing.T) {
 	tests := []struct {
 		name   string
-		option FingerPrintOptions
+		option Options
 		result bool
 		error  error
 	}{
-		{name: "k > t", option: FingerPrintOptions{GuaranteeThreshold: 0, NoiseThreshold: 1}, result: false, error: nil},
-		{name: "k == t", option: FingerPrintOptions{GuaranteeThreshold: 1, NoiseThreshold: 1}, result: true, error: nil},
-		{name: "k < t", option: FingerPrintOptions{GuaranteeThreshold: 1, NoiseThreshold: 0}, result: true, error: nil},
+		{name: "k > t", option: Options{GuaranteeThreshold: 0, NoiseThreshold: 1}, result: false, error: nil},
+		{name: "k == t", option: Options{GuaranteeThreshold: 1, NoiseThreshold: 1}, result: true, error: nil},
+		{name: "k < t", option: Options{GuaranteeThreshold: 1, NoiseThreshold: 0}, result: true, error: nil},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

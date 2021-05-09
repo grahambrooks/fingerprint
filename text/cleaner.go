@@ -14,4 +14,3 @@ func Clean(s string) string {
 	}
 	return string(result)
 }
-
