@@ -30,7 +30,7 @@ func Test_intersect(t *testing.T) {
 		s2 = append(s2, fingerprint.Mark{MinValue: 1, Index: 2})
 		set := intersect(s1, s2)
 		assert.Len(t, set, 1)
-		assert.Contains(t, set, fingerprint.Mark{1, 2})
+		assert.Contains(t, set, fingerprint.Mark{MinValue: 1, Index: 2})
 
 	})
 }
@@ -49,7 +49,7 @@ func Test_union(t *testing.T) {
 		s2 := make(fingerprint.Fingerprint, 0)
 		set := union(s1, s2)
 		assert.Len(t, set, 1)
-		assert.Contains(t, set, fingerprint.Mark{1, 2})
+		assert.Contains(t, set, fingerprint.Mark{MinValue: 1, Index: 2})
 
 	})
 	t.Run("intersect of two fingerprints with the same mark is not empty", func(t *testing.T) {
@@ -60,8 +60,8 @@ func Test_union(t *testing.T) {
 		s2 = append(s2, fingerprint.Mark{MinValue: 1, Index: 2})
 		set := union(s1, s2)
 		assert.Len(t, set, 2)
-		assert.Contains(t, set, fingerprint.Mark{1, 2})
-		assert.Contains(t, set, fingerprint.Mark{3, 4})
+		assert.Contains(t, set, fingerprint.Mark{MinValue: 1, Index: 2})
+		assert.Contains(t, set, fingerprint.Mark{MinValue: 3, Index: 4})
 
 	})
 }

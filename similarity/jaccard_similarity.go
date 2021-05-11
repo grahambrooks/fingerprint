@@ -14,7 +14,7 @@ func intersect(f1, f2 fingerprint.Fingerprint) (set fingerprint.MarkSet) {
 	s1 := f1.AsSet()
 	s2 := f2.AsSet()
 	set = make(fingerprint.MarkSet, 0)
-	for mark, _ := range s1 {
+	for mark := range s1 {
 		if s2[mark] {
 			set[mark] = true
 		}
@@ -25,10 +25,10 @@ func union(f1, f2 fingerprint.Fingerprint) (set fingerprint.MarkSet) {
 	s1 := f1.AsSet()
 	s2 := f2.AsSet()
 	set = make(fingerprint.MarkSet, 0)
-	for mark, _ := range s1 {
+	for mark := range s1 {
 		set[mark] = true
 	}
-	for mark, _ := range s2 {
+	for mark := range s2 {
 		set[mark] = true
 	}
 	return set

@@ -38,18 +38,18 @@ func TestFingerprintOptions(t *testing.T) {
 
 func TestFingerprint_AsSet(t *testing.T) {
 	t.Run("Empty fingerprint empty set", func(t *testing.T) {
-		print := make(Fingerprint, 0)
-		set := print.AsSet()
+		fingerprint := make(Fingerprint, 0)
+		set := fingerprint.AsSet()
 		assert.Len(t, set, 0)
 	})
 
 	t.Run("set contains all marks from fingerprint", func(t *testing.T) {
-		print := make(Fingerprint, 0)
-		print = append(print, Mark{MinValue: 1, Index: 2})
-		print = append(print, Mark{MinValue: 3, Index: 4})
-		set := print.AsSet()
+		fingerprint := make(Fingerprint, 0)
+		fingerprint = append(fingerprint, Mark{MinValue: 1, Index: 2})
+		fingerprint = append(fingerprint, Mark{MinValue: 3, Index: 4})
+		set := fingerprint.AsSet()
 		assert.Len(t, set, 2)
-		assert.Contains(t, print, Mark{MinValue: 1, Index: 2})
-		assert.Contains(t, print, Mark{MinValue: 3, Index: 4})
+		assert.Contains(t, fingerprint, Mark{MinValue: 1, Index: 2})
+		assert.Contains(t, fingerprint, Mark{MinValue: 3, Index: 4})
 	})
 }

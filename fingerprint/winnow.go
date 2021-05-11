@@ -5,12 +5,12 @@ import "math"
 func Winnow(g int, kgrams []uint32) (winnow [][]uint32) {
 	winnow = make([][]uint32, 0)
 
-	len := len(kgrams)
-	if len == 0 {
+	length := len(kgrams)
+	if length == 0 {
 		return winnow
 	}
 
-	for i := g; i <= len; i++ {
+	for i := g; i <= length; i++ {
 		winnow = append(winnow, kgrams[i-g:i])
 	}
 
