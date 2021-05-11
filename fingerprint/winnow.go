@@ -44,3 +44,13 @@ func RightmostLowestValue(values []uint32) (w Mark) {
 	}
 	return w
 }
+
+type MarkSet map[Mark]bool
+
+func (f Fingerprint) AsSet() MarkSet {
+	set := make(MarkSet, 0)
+	for _, mark := range f {
+		set[mark] = true
+	}
+	return set
+}

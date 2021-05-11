@@ -2,21 +2,34 @@ package similarity
 
 import (
 	"fingerprint/fingerprint"
-	"github.com/deckarep/golang-set"
 )
 
 func Jaccard(s1, s2 fingerprint.Fingerprint) float64 {
-	s1set := convertFingerToSet(s1)
-	s2set := convertFingerToSet(s2)
-	intersectCardinality := s1set.Intersect(s2set).Cardinality()
-	unionCardinality := s1set.Union(s2set).Cardinality()
+	intersectCardinality := len(intersect(s1, s2))
+	unionCardinality := len(union(s1, s2))
 	return float64(intersectCardinality) / float64(unionCardinality)
 }
 
-func convertFingerToSet(s fingerprint.Fingerprint) mapset.Set {
-	set := mapset.NewSet()
-	for _, token := range s {
-		set.Add(token)
+func intersect(f1, f2 fingerprint.Fingerprint) (set fingerprint.MarkSet) {
+	s1 := f1.AsSet()
+	s2 := f2.AsSet()
+	set = make(fingerprint.MarkSet, 0)
+	for mark, _ := range s1 {
+		if s2[mark] {
+			set[mark] = true
+		}
+	}
+	return set
+}
+func union(f1, f2 fingerprint.Fingerprint) (set fingerprint.MarkSet) {
+	s1 := f1.AsSet()
+	s2 := f2.AsSet()
+	set = make(fingerprint.MarkSet, 0)
+	for mark, _ := range s1 {
+		set[mark] = true
+	}
+	for mark, _ := range s2 {
+		set[mark] = true
 	}
 	return set
 }
