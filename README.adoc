@@ -1,0 +1,8 @@
+= Fingerprint
+
+A fingerprinting and similarity module for go.
+
+This is an implementation of algorithm described in the http://igm.univ-mlv.fr/~mac/ENS/DOC/sigmod03-1.pdf[Winnowing: Local Algorithms for Document Fingerprinting] and can be used to fingerprint document text and calculate a similarity score using the https://en.wikipedia.org/wiki/Jaccard_index[Jaccard index or similarity coefficient]
+
+The library is intended to be used for relatively small documents and not designed for use with streams or channels.
+
