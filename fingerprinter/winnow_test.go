@@ -1,4 +1,4 @@
-package fingerprint
+package fingerprinter
 
 import (
 	"github.com/stretchr/testify/assert"

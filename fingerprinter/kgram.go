@@ -1,4 +1,4 @@
-package fingerprint
+package fingerprinter
 
 func KGram(k int, input string) (result []string) {
 	result = make([]string, 0)

@@ -1,4 +1,4 @@
-package fingerprint
+package fingerprinter
 
 import (
 	"github.com/grahambrooks/fingerprint/text"
@@ -9,14 +9,22 @@ type Options struct {
 	NoiseThreshold     int // k
 }
 
-func (o Options) IsValid() (bool, error) {
-	return o.NoiseThreshold <= o.GuaranteeThreshold, nil
+func (o Options) IsValid() bool {
+	return o.NoiseThreshold <= o.GuaranteeThreshold && o.NoiseThreshold > 0
 }
 
-func Record(k int, sourceText string) (fingerprints []uint32) {
+func (o Options) VerifyOrDefault() Options {
+	if !o.IsValid() {
+		return Options{GuaranteeThreshold: 4, NoiseThreshold: 4}
+	}
+	return o
+}
+
+func record(k int, sourceText string) (fingerprints []uint32) {
 	return KGramHash(KGram(k, text.Clean(sourceText)))
 }
 
-func SomeFingerPrintFunction(input string, options Options) Fingerprint {
-	return WinnowFingerprint(options.GuaranteeThreshold, Record(options.NoiseThreshold, text.Clean(input)))
+func TextFingerprint(input string, options Options) Fingerprint {
+	options = options.VerifyOrDefault()
+	return WinnowFingerprint(options.GuaranteeThreshold, record(options.NoiseThreshold, text.Clean(input)))
 }

@@ -1,4 +1,4 @@
-package fingerprint
+package fingerprinter
 
 import "math"
 
