@@ -4,5 +4,32 @@ A fingerprinting and similarity module for go.
 
 This is an implementation of algorithm described in the http://igm.univ-mlv.fr/~mac/ENS/DOC/sigmod03-1.pdf[Winnowing: Local Algorithms for Document Fingerprinting] and can be used to fingerprint document text and calculate a similarity score using the https://en.wikipedia.org/wiki/Jaccard_index[Jaccard index or similarity coefficient]
 
-The library is intended to be used for relatively small documents and not designed for use with streams or channels.
+The library works for  relatively small documents and not designed for use with streams or channels.
+
+[source,go]
+----
+package main
+
+import (
+	"fmt"
+	"github.com/grahambrooks/fingerprint/fingerprinter"
+	"github.com/grahambrooks/fingerprint/similarity"
+)
+
+func main() {
+	score := similarity.StringSimilarity("the quick brown fox jumped over the lazy dog", "the quick brown fox jumped over the lazy dog", fingerprinter.Options{})
+
+	fmt.Printf("Similary score %f", score)
+}
+----
+
+Produces:
+
+[source]
+----
+> go run main.go
+Similary score 1.000000
+----
+
+The similarity score is between 0 (dissimilar) to 1 similar depending on the fingerrpint options.
 
