@@ -1,7 +1,7 @@
 package similarity
 
 import (
-	"fingerprint/fingerprint"
+	"github.com/grahambrooks/fingerprint/fingerprint"
 )
 
 func Jaccard(s1, s2 fingerprint.Fingerprint) float64 {

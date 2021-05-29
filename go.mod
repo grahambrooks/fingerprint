@@ -1,4 +1,4 @@
-module fingerprint
+module github.com/grahambrooks/fingerprint
 
 go 1.16
 

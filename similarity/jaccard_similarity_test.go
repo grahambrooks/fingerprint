@@ -1,7 +1,7 @@
 package similarity
 
 import (
-	"fingerprint/fingerprint"
+	"github.com/grahambrooks/fingerprint/fingerprint"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

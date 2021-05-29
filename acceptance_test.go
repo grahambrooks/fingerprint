@@ -1,9 +1,9 @@
 package fingerprint
 
 import (
-	"fingerprint/fingerprint"
-	"fingerprint/similarity"
 	"fmt"
+	"github.com/grahambrooks/fingerprint/fingerprint"
+	"github.com/grahambrooks/fingerprint/similarity"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
