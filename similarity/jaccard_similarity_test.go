@@ -23,7 +23,7 @@ func Test_intersect(t *testing.T) {
 
 	t.Run("intersect of a fingerprinter and an empty fingerprinter is empty", func(t *testing.T) {
 		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.Mark{MinValue: 1, Index: 2})
+		s1 = append(s1, fingerprinter.NewMark(1,2))
 		s2 := make(fingerprinter.Fingerprint, 0)
 		set := intersect(s1, s2)
 		assert.Len(t, set, 0)
@@ -31,13 +31,13 @@ func Test_intersect(t *testing.T) {
 	})
 	t.Run("intersect of two fingerprints with the same mark is not empty", func(t *testing.T) {
 		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.Mark{MinValue: 1, Index: 2})
-		s1 = append(s1, fingerprinter.Mark{MinValue: 3, Index: 4})
+		s1 = append(s1, fingerprinter.NewMark(1,2))
+		s1 = append(s1, fingerprinter.NewMark(3,4))
 		s2 := make(fingerprinter.Fingerprint, 0)
-		s2 = append(s2, fingerprinter.Mark{MinValue: 1, Index: 2})
+		s2 = append(s2, fingerprinter.NewMark(1,2))
 		set := intersect(s1, s2)
 		assert.Len(t, set, 1)
-		assert.Contains(t, set, fingerprinter.Mark{MinValue: 1, Index: 2})
+		assert.Contains(t, set, fingerprinter.NewMark(1,2))
 
 	})
 }
@@ -52,23 +52,23 @@ func Test_union(t *testing.T) {
 
 	t.Run("union of a fingerprinter and an empty fingerprinter is not empty", func(t *testing.T) {
 		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.Mark{MinValue: 1, Index: 2})
+		s1 = append(s1, fingerprinter.NewMark(1,2))
 		s2 := make(fingerprinter.Fingerprint, 0)
 		set := union(s1, s2)
 		assert.Len(t, set, 1)
-		assert.Contains(t, set, fingerprinter.Mark{MinValue: 1, Index: 2})
+		assert.Contains(t, set, fingerprinter.NewMark(1,2))
 
 	})
 	t.Run("intersect of two fingerprints with the same mark is not empty", func(t *testing.T) {
 		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.Mark{MinValue: 1, Index: 2})
-		s1 = append(s1, fingerprinter.Mark{MinValue: 3, Index: 4})
+		s1 = append(s1, fingerprinter.NewMark(1,2))
+		s1 = append(s1, fingerprinter.NewMark(3,4))
 		s2 := make(fingerprinter.Fingerprint, 0)
-		s2 = append(s2, fingerprinter.Mark{MinValue: 1, Index: 2})
+		s2 = append(s2, fingerprinter.NewMark(1,2))
 		set := union(s1, s2)
 		assert.Len(t, set, 2)
-		assert.Contains(t, set, fingerprinter.Mark{MinValue: 1, Index: 2})
-		assert.Contains(t, set, fingerprinter.Mark{MinValue: 3, Index: 4})
+		assert.Contains(t, set, fingerprinter.NewMark(1,2))
+		assert.Contains(t, set, fingerprinter.NewMark(3,4))
 
 	})
 }

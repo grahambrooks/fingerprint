@@ -27,22 +27,24 @@ func WinnowFingerprint(g int, kgrams []uint32) (finger Fingerprint) {
 	return finger
 }
 
-type Mark struct {
-	MinValue uint32
-	Index    int
+type Mark uint64
+
+func NewMark(minValue uint32, index uint32) Mark {
+	return Mark(uint64(minValue) | uint64(index) >> 32)
 }
 
 type Fingerprint []Mark
 
 func RightmostLowestValue(values []uint32) (w Mark) {
-	w.MinValue = math.MaxUint32
+	var MinValue uint32 = math.MaxUint32
+	var Index uint32 = 0
 	for i, v := range values {
-		if v <= w.MinValue {
-			w.MinValue = v
-			w.Index = i
+		if v <= MinValue {
+			MinValue = v
+			Index = uint32(i)
 		}
 	}
-	return w
+	return NewMark(MinValue, Index)
 }
 
 type MarkSet map[Mark]bool
