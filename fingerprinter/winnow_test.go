@@ -30,7 +30,7 @@ func TestWinnowFingerprinting(t *testing.T) {
 		g           int
 		kgrams      []uint32
 	}{
-		{name: "empty k-grams", fingerprint: Fingerprint{Mark{MinValue: 0x2, Index: 2}, Mark{MinValue: 0x1, Index: 2}}, g: 3, kgrams: []uint32{4, 3, 2, 1}},
+		{name: "empty k-grams", fingerprint: Fingerprint{NewMark(0x2, 2), NewMark(0x1, 2)}, g: 3, kgrams: []uint32{4, 3, 2, 1}},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -45,10 +45,10 @@ func TestRightmostLowestValue(t *testing.T) {
 		expected Mark
 		values   []uint32
 	}{
-		{"empty", Mark{MinValue: math.MaxUint32, Index: 0}, []uint32{}},
-		{"single entry", Mark{MinValue: 1, Index: 0}, []uint32{1}},
-		{"min in the right most position", Mark{MinValue: 1, Index: 2}, []uint32{100, 10, 1}},
-		{"min in the right most position repeated", Mark{MinValue: 1, Index: 4}, []uint32{1, 100, 10, 1, 1}},
+		{"empty", NewMark(math.MaxUint32, 0), []uint32{}},
+		{"single entry", NewMark(1, 0), []uint32{1}},
+		{"min in the right most position", NewMark(1, 2), []uint32{100, 10, 1}},
+		{"min in the right most position repeated", NewMark(1, 4), []uint32{1, 100, 10, 1, 1}},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

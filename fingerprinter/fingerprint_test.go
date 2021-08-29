@@ -44,11 +44,11 @@ func TestFingerprint_AsSet(t *testing.T) {
 
 	t.Run("set contains all marks from fingerprinter", func(t *testing.T) {
 		fingerprint := make(Fingerprint, 0)
-		fingerprint = append(fingerprint, Mark{MinValue: 1, Index: 2})
-		fingerprint = append(fingerprint, Mark{MinValue: 3, Index: 4})
+		fingerprint = append(fingerprint, NewMark(1, 2))
+		fingerprint = append(fingerprint, NewMark(3, 4))
 		set := fingerprint.AsSet()
 		assert.Len(t, set, 2)
-		assert.Contains(t, fingerprint, Mark{MinValue: 1, Index: 2})
-		assert.Contains(t, fingerprint, Mark{MinValue: 3, Index: 4})
+		assert.Contains(t, fingerprint, NewMark(1, 2))
+		assert.Contains(t, fingerprint, NewMark(3, 4))
 	})
 }
