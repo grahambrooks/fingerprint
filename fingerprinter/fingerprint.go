@@ -20,8 +20,8 @@ func (o Options) VerifyOrDefault() Options {
 	return o
 }
 
-func record(k int, sourceText string) (fingerprints []uint32) {
-	return KGramHash(KGram(k, text.Clean(sourceText)))
+func record(k int, sourceText string) []uint32 {
+	return KGramHash(KGram(k, sourceText))
 }
 
 func TextFingerprint(input string, options Options) Fingerprint {

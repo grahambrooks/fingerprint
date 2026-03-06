@@ -1,16 +1,17 @@
 package text
 
-import "unicode"
+import (
+	"strings"
+	"unicode"
+)
 
 func Clean(s string) string {
-	var result []rune
+	var b strings.Builder
+	b.Grow(len(s))
 	for _, r := range s {
-		switch {
-		case unicode.IsUpper(r):
-			result = append(result, unicode.ToLower(r))
-		case unicode.IsLower(r):
-			result = append(result, r)
+		if unicode.IsLetter(r) {
+			b.WriteRune(unicode.ToLower(r))
 		}
 	}
-	return string(result)
+	return b.String()
 }

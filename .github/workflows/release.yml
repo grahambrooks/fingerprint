@@ -23,15 +23,29 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-    - name: Generate version tag
+    - name: Generate version tag and changelog
       id: version
       run: |
         VERSION="$(date -u +%Y-%m-%d)-$(git rev-parse --short HEAD)"
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+        PREVIOUS_TAG=$(git tag --sort=-creatordate | head -n 1)
+        if [ -n "$PREVIOUS_TAG" ]; then
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)" "$PREVIOUS_TAG"..HEAD)
+        else
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)")
+        fi
+        {
+          echo "changelog<<EOF"
+          echo "$CHANGELOG"
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
 
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.version.outputs.version }}
         name: ${{ steps.version.outputs.version }}
-        generate_release_notes: true
+        body: |
+          ## Changelog
+          ${{ steps.version.outputs.changelog }}

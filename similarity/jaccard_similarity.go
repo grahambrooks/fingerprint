@@ -6,37 +6,26 @@ import (
 
 func StringSimilarity(s1, s2 string, options fingerprinter.Options) float64 {
 	f1 := fingerprinter.TextFingerprint(s1, options)
-	f2 := fingerprinter.TextFingerprint(s1, options)
+	f2 := fingerprinter.TextFingerprint(s2, options)
 
 	return Compare(f1, f2)
 }
 
-func Compare(s1, s2 fingerprinter.Fingerprint) float64 {
-	intersectCardinality := len(intersect(s1, s2))
-	unionCardinality := len(union(s1, s2))
-	return float64(intersectCardinality) / float64(unionCardinality)
-}
+func Compare(f1, f2 fingerprinter.Fingerprint) float64 {
+	set1 := f1.AsSet()
+	set2 := f2.AsSet()
 
-func intersect(f1, f2 fingerprinter.Fingerprint) (set fingerprinter.MarkSet) {
-	s1 := f1.AsSet()
-	s2 := f2.AsSet()
-	set = make(fingerprinter.MarkSet, 0)
-	for mark := range s1 {
-		if s2[mark] {
-			set[mark] = true
+	unionCount := len(set1)
+	intersectCount := 0
+	for mark := range set2 {
+		if set1[mark] {
+			intersectCount++
+		} else {
+			unionCount++
 		}
 	}
-	return set
-}
-func union(f1, f2 fingerprinter.Fingerprint) (set fingerprinter.MarkSet) {
-	s1 := f1.AsSet()
-	s2 := f2.AsSet()
-	set = make(fingerprinter.MarkSet, 0)
-	for mark := range s1 {
-		set[mark] = true
+	if unionCount == 0 {
+		return 0
 	}
-	for mark := range s2 {
-		set[mark] = true
-	}
-	return set
+	return float64(intersectCount) / float64(unionCount)
 }

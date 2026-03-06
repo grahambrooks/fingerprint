@@ -7,10 +7,10 @@ import (
 
 func TestKgramGenerations(t *testing.T) {
 	t.Run("should return empty list for empty string", func(t *testing.T) {
-		assert.Equal(t, []string{}, KGram(0, ""))
+		assert.Empty(t, KGram(0, ""))
 	})
 	t.Run("should return empty list for strings less than k", func(t *testing.T) {
-		assert.Equal(t, []string{}, KGram(4, "abs"))
+		assert.Empty(t, KGram(4, "abs"))
 	})
 
 	t.Run("should return a single kgram if k matches the string length", func(t *testing.T) {

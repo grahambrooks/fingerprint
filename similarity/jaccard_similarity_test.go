@@ -11,64 +11,32 @@ func TestStringSimilarity(t *testing.T) {
 		text := "the quick brown fox jumped over the lazy dog"
 		assert.Equal(t, 1.0, StringSimilarity(text, text, fingerprinter.Options{}))
 	})
-}
-
-func Test_intersect(t *testing.T) {
-	t.Run("intersect of two empty fingerprints is empty", func(t *testing.T) {
-		s1 := make(fingerprinter.Fingerprint, 0)
-		s2 := make(fingerprinter.Fingerprint, 0)
-		set := intersect(s1, s2)
-		assert.Empty(t, set)
-	})
-
-	t.Run("intersect of a fingerprinter and an empty fingerprinter is empty", func(t *testing.T) {
-		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.NewMark(1,2))
-		s2 := make(fingerprinter.Fingerprint, 0)
-		set := intersect(s1, s2)
-		assert.Len(t, set, 0)
-
-	})
-	t.Run("intersect of two fingerprints with the same mark is not empty", func(t *testing.T) {
-		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.NewMark(1,2))
-		s1 = append(s1, fingerprinter.NewMark(3,4))
-		s2 := make(fingerprinter.Fingerprint, 0)
-		s2 = append(s2, fingerprinter.NewMark(1,2))
-		set := intersect(s1, s2)
-		assert.Len(t, set, 1)
-		assert.Contains(t, set, fingerprinter.NewMark(1,2))
-
+	t.Run("should return 0 for completely different strings", func(t *testing.T) {
+		s1 := "aaaaaaaaaaaaaaaa"
+		s2 := "bbbbbbbbbbbbbbbb"
+		sim := StringSimilarity(s1, s2, fingerprinter.Options{})
+		assert.Less(t, sim, 0.1)
 	})
 }
 
-func Test_union(t *testing.T) {
-	t.Run("union of two empty fingerprints is empty", func(t *testing.T) {
-		s1 := make(fingerprinter.Fingerprint, 0)
-		s2 := make(fingerprinter.Fingerprint, 0)
-		set := union(s1, s2)
-		assert.Empty(t, set)
+func TestCompare(t *testing.T) {
+	t.Run("two empty fingerprints returns 0", func(t *testing.T) {
+		f1 := fingerprinter.Fingerprint{}
+		f2 := fingerprinter.Fingerprint{}
+		assert.Equal(t, 0.0, Compare(f1, f2))
 	})
-
-	t.Run("union of a fingerprinter and an empty fingerprinter is not empty", func(t *testing.T) {
-		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.NewMark(1,2))
-		s2 := make(fingerprinter.Fingerprint, 0)
-		set := union(s1, s2)
-		assert.Len(t, set, 1)
-		assert.Contains(t, set, fingerprinter.NewMark(1,2))
-
+	t.Run("identical fingerprints returns 1", func(t *testing.T) {
+		f1 := fingerprinter.Fingerprint{fingerprinter.NewMark(1, 2), fingerprinter.NewMark(3, 4)}
+		assert.Equal(t, 1.0, Compare(f1, f1))
 	})
-	t.Run("intersect of two fingerprints with the same mark is not empty", func(t *testing.T) {
-		s1 := make(fingerprinter.Fingerprint, 0)
-		s1 = append(s1, fingerprinter.NewMark(1,2))
-		s1 = append(s1, fingerprinter.NewMark(3,4))
-		s2 := make(fingerprinter.Fingerprint, 0)
-		s2 = append(s2, fingerprinter.NewMark(1,2))
-		set := union(s1, s2)
-		assert.Len(t, set, 2)
-		assert.Contains(t, set, fingerprinter.NewMark(1,2))
-		assert.Contains(t, set, fingerprinter.NewMark(3,4))
-
+	t.Run("disjoint fingerprints returns 0", func(t *testing.T) {
+		f1 := fingerprinter.Fingerprint{fingerprinter.NewMark(1, 2)}
+		f2 := fingerprinter.Fingerprint{fingerprinter.NewMark(5, 6)}
+		assert.Equal(t, 0.0, Compare(f1, f2))
+	})
+	t.Run("partial overlap", func(t *testing.T) {
+		f1 := fingerprinter.Fingerprint{fingerprinter.NewMark(1, 2), fingerprinter.NewMark(3, 4)}
+		f2 := fingerprinter.Fingerprint{fingerprinter.NewMark(1, 2), fingerprinter.NewMark(5, 6)}
+		assert.InDelta(t, 1.0/3.0, Compare(f1, f2), 0.001)
 	})
 }

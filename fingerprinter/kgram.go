@@ -1,15 +1,17 @@
 package fingerprinter
 
-func KGram(k int, input string) (result []string) {
-	result = make([]string, 0)
+func KGram(k int, input string) []string {
 	if k < 1 {
-		return result
+		return nil
 	}
 	l := len(input)
-
-	for i := k; i <= l; i++ {
-		result = append(result, input[i-k:i])
+	n := l - k + 1
+	if n <= 0 {
+		return nil
 	}
-
+	result := make([]string, n)
+	for i := range n {
+		result[i] = input[i : i+k]
+	}
 	return result
 }

@@ -13,7 +13,7 @@ func TestWinnow(t *testing.T) {
 		expected [][]uint32
 		values   []uint32
 	}{
-		{name: "k-gram less that g", expected: [][]uint32{}, g: 0, values: []uint32{}},
+		{name: "k-gram less that g", expected: nil, g: 0, values: []uint32{}},
 		{name: "returns a single k-gram if length equal to g", g: 3, expected: [][]uint32{{1, 2, 3}}, values: []uint32{1, 2, 3}},
 	}
 	for _, test := range tests {
