@@ -31,24 +31,25 @@ granular control.
 package main
 
 import (
-	"fmt"
-	"github.com/grahambrooks/fingerprint/fingerprinter"
-	"github.com/grahambrooks/fingerprint/similarity"
+  "fmt"
+
+  "github.com/grahambrooks/fingerprint/fingerprinter"
+  "github.com/grahambrooks/fingerprint/similarity"
 )
 
 func main() {
-	text1 := "The quick brown fox jumped over the lazy dog"
-	text2 := "The quick brown fox jumps over the lazy dog"
+  text1 := "The quick brown fox jumped over the lazy dog"
+  text2 := "The quick brown fox jumps over the lazy dog"
 
-	// Options define the sensitivity of the fingerprinting
-	options := fingerprinter.Options{
-		GuaranteeThreshold: 4,
-		NoiseThreshold:     4,
-	}
+  // Options define the sensitivity of the fingerprinting
+  options := fingerprinter.Options{
+    GuaranteeThreshold: 4,
+    NoiseThreshold:     4,
+  }
 
-	score := similarity.StringSimilarity(text1, text2, options)
+  score := similarity.StringSimilarity(text1, text2, options)
 
-	fmt.Printf("Similarity score: %f\n", score)
+  fmt.Printf("Similarity score: %f\n", score)
 }
 ```
 
